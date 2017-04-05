@@ -29,8 +29,8 @@ Card::Card(string s, string v) {
 
 int main() {
 
-  string suit = "Spades";
-  string value = "Ace";
+  string suit = "Hearts";
+  string value = "King";
   Card test(suit, value);
 
   return 0;
