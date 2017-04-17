@@ -51,7 +51,7 @@ void Deck::addCard(Card card) {
   deck.push_back(card);
 }
 
-void Deck::emoveTopCard() {
+void Deck::removeTopCard() {
   deck.erase(deck.begin(), deck.begin()+1); //removes card from deck. For instance, an object mainDeck of type Deck in main function
 }
 
