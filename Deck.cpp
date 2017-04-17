@@ -17,7 +17,7 @@ private:
 public:
   void shuffle();
   void addCard(Card card);
-  Card removeTopCard();
+  void removeTopCard();
   void populateDeck();
 };
 
@@ -30,5 +30,10 @@ void Deck::addCard(Card card) {
 }
 
 void removeTopCard() {
-  return deck.pop_back();
+  deck.erase(deck.begin(), deck.begin()+1); //removes card from deck. For instance, an object mainDeck of type Deck in main function
+}
+
+void populateDeck()
+{
+  
 }
