@@ -6,6 +6,7 @@
 #include <random>
 #include <ctime>        // std::time
 #include <cstdlib>
+#include "Card.h"
 
 using namepsace std;
 
