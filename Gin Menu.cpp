@@ -5,16 +5,9 @@ using namespace std;
 
 int Rules(){
 	cout << "Here are the rules:\n";
-		//open GinRules.txt
+		//open rules.exe
 		//This will save space on the final code
 		system ("start rules.exe");
-    	//Fail check
-    	if(infile1.fail()){ cout << "File failed to open.\n"; exit(1); }
-	    //Prints file to screen and closes the file
-   		cout << infile1.rdbuf();
-    	infile1.close();
-	
-
 };
 
 int main(){
@@ -31,7 +24,7 @@ int main(){
 	}
 	
 	if((answer == "Rules") || (answer == "rules") || (answer == "R") || (answer == "r")){
-		Rules();
+		Rules(); //seperate function to open rules.exe
 	   	}
 	
 	else{
