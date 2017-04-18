@@ -1,0 +1,123 @@
+#include <cstring>
+#include <algorithm>
+#include <random>
+#include <ctime>        // std::time
+#include <cstdlib>
+
+using namespace std;
+
+//----------------4/17/2017 @ 10:24pm-------------//
+
+struct Card
+{
+	char suit;
+	char card;
+};
+
+int myrandom(int i) { return rand() % i; }
+
+class Deck{
+private:
+	vector<Card> deck;
+	Card c;//used as an intermediary
+
+public:
+	void shuffle();
+	void addCard(Deck&); //function to get just one card from main deck
+	void removeTopCard();
+	void populateDeck();
+	void dealHands(Deck&, Deck&); //initializes both the computers and players decks with 10 cards each
+	void deleteDeck(); // called only once
+	void printHand(); //Show the player what cards they have
+	void printPile(); //used to display the top card of the pile
+};
+
+
+void Deck::dealHands(Deck& other1, Deck& other2)
+{
+	for (unsigned int i = 0; i < 10; i++)
+	{
+		other1.c.card = other2.deck[i].card;
+		other1.c.suit = other2.deck[i].suit;
+
+		other1.deck.push_back(other1.c);
+
+		other2.deck.erase(other2.deck.begin(), other2.deck.begin() + 1);
+	}
+}
+
+void Deck::printHand()
+{
+	cout << "-------Player's Hand---------" << endl;
+
+	for (unsigned int i = 0; i < deck.size(); i++)
+	{
+		cout << "\t" << deck[i].card << "\t" << deck[i].suit << "\n";
+	}
+
+	cout << "------------------------------" << endl;
+	cout << endl;
+	
+}
+
+void Deck::printPile()
+{
+	cout << "-------Top of the Pile---------" << endl;
+
+	cout << "\t\t" << deck[0].card << "\n" << "\t\t" << deck[0].suit << endl;
+
+	cout << "--------------------------------" << endl;
+	cout << endl;
+
+}
+
+
+void Deck::deleteDeck()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		deck.erase(deck.begin(), deck.begin() + 1);
+	}
+}
+
+
+void Deck::shuffle()
+{
+	srand(time(0));
+
+
+	random_shuffle(deck.begin(), deck.end(), myrandom);
+}
+
+void Deck::addCard(Deck& other) //add one card to a given deck, and then delete one card from the main deck
+{
+	other.c.card = deck[0].card;
+	other.c.suit = deck[0].suit;
+
+	other.deck.push_back(other.c);
+	deck.erase(deck.begin(), deck.begin() + 1);
+}
+
+void Deck::removeTopCard() {
+	deck.erase(deck.begin(), deck.begin() + 1); //removes card from deck. For instance, an object mainDeck of type Deck in main function
+}
+
+void Deck::populateDeck()
+{
+	Card d; //used to load cards into the vector
+
+	char suit[4] = { 'h', 'd', 'c', 's' };
+	char card[13] = { '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A' };
+
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 13; j++)
+		{
+			d.suit = suit[i];
+			d.card = card[j];
+
+			deck.push_back(d);
+		}
+	}
+
+}
