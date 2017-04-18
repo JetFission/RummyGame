@@ -23,7 +23,7 @@ int main(){
 		//can call function to start game
 	}
 	
-	if((answer == "Rules") || (answer == "rules") || (answer == "R") || (answer == "r")){
+	else if((answer == "Rules") || (answer == "rules") || (answer == "R") || (answer == "r")){
 		Rules(); //seperate function to open rules.exe
 	   	}
 	
