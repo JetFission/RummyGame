@@ -7,8 +7,7 @@ int Rules(){
 	cout << "Here are the rules:\n";
 		//open GinRules.txt
 		//This will save space on the final code
-		ifstream infile1;
-   		infile1.open("GinRulesV1.txt");
+		system ("start rules.exe");
     	//Fail check
     	if(infile1.fail()){ cout << "File failed to open.\n"; exit(1); }
 	    //Prints file to screen and closes the file
