@@ -57,7 +57,7 @@ int main()  {
 		 <<"************************************************************************\n\n"
 		 <<"Press Enter to continue:";
     if (cin.get() == '\n')
-    cout <<"\n\nDo you want to see the rules again?\n";
+    cout <<"\n\nDo you want to see the rules again?\n         Yes      No\n";
     cin >> answer;
     if ((answer == "Yes") || (answer == "yes") || (answer == "Y") || (answer == "y")){
     //leave blank	
