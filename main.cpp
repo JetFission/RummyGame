@@ -61,6 +61,6 @@ int displayInterface() {
 }
 
 int Rules(){cout << "Here are the rules:\n"; system ("start rules.exe");}
-		//open rules.exe
-		//This will save space on the final code
+//open rules.exe
+//This will save space on the final code
 		
