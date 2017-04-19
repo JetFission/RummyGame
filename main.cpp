@@ -9,3 +9,13 @@ int main() {
 
   return 0;
 }
+
+void mainLoop() {
+  
+}
+
+int displayInterface() {
+  
+  
+  return selection;
+}
