@@ -6,35 +6,14 @@
 #include <random>
 #include <ctime>        // std::time
 #include <cstdlib>
+#include "Card.h"
+#include "Deck.h"
 
 using namespace std;
 
 //---------------4/17/2017--------------//
 
-struct Card
-{
-	char suit;
-	char card;
-};
-
 int myrandom(int i) { return rand() % i; }
-
-class Deck{
-private:
-	vector<Card> deck;
-	Card c;//used as an intermediary
-	
-public:
-	void shuffle();
-	//void addCard(Card card);
-	void removeTopCard();
-	void populateDeck();
-	void dealHands(Deck&,Deck&); //initializes both the computers and players decks with 10 cards each
-	void deleteDeck(); // called only once
-	void printHand(); //used to verify stuff
-	void printDeck();
-};
-
 
 void Deck::dealHands(Deck& other1, Deck& other2)
 {
