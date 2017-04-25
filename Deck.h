@@ -8,8 +8,8 @@ private:
 	Card c;//used as an intermediary
 public:
 	void shuffle();
-	//void addCard(Card card);
-	void removeTopCard();
+	void addCard(Card card);
+	Card removeTopCard();
 	void populateDeck();
 	void dealHands(Deck&,Deck&); //initializes both the computers and players decks with 10 cards each
 	void deleteDeck(); // called only once
