@@ -5,6 +5,7 @@
 using namespace std;
 
 int Rules();
+void mainLoop();
 
 int main() {
 	string answer; //variable to check options with
@@ -23,6 +24,7 @@ int main() {
 		menuloop = 0;
 		cout << "Let's play\n";
 		//can call function to start game
+		mainLoop();
 	}
 	//multiple ways to input 'rules'
 	else if((answer == "Rules") || (answer == "rules") || (answer == "R") || (answer == "r")){
