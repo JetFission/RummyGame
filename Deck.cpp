@@ -88,7 +88,7 @@ void Deck::populateDeck()
 {
 	Card d; //used to load cards into the vector
 
-	char suit[4] = { 'h', 'd', 'c', 's' };
+	char suit[4] = { 'H', 'D', 'C', 'S' };
 	char card[13] = { '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A' };
 
 	for (int i = 0; i < 4; i++)
@@ -101,5 +101,4 @@ void Deck::populateDeck()
 			deck.push_back(d);
 		}
 	}
-
 }
