@@ -51,12 +51,33 @@ int main() {
 
 void mainLoop() {
   
-}
-
-int displayInterface() {
-  
-  
-  return selection;
+	//initalize decks
+	Deck stockPile();
+	Deck discardPile();
+	Deck playerHand();
+	Deck AIHand();
+	
+	//prepare stock pile
+	stockPile.populateDeck();
+	stockPile.shuffle();
+	
+	//deal cards to players and ai
+	for (int i = 0; i < 9; i++) {
+		playerHand.addCard(stockPile.removeTopCard);
+		AIHand.addCard(stockPile.removeTopCard);
+	}
+	
+	//initalize discard pile
+	discardPile.addCard(stockPile.removeTopCard);
+	
+	boolean finished = false;
+	
+	while (!finished) {
+	
+		//show game UI
+		//game logic goes here
+		
+	}
 }
 
 int Rules(){cout << "Here are the rules:\n"; system ("start rules.exe");}
