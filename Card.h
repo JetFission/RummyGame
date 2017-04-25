@@ -10,6 +10,7 @@ private:
   string value;
 public:
   Card(string, string);
+  void showCard();
 };
 
 #endif
