@@ -23,3 +23,11 @@ Card::Card(char s, char v) {
 void Card::showCard() {
 	cout << value << suit;
 }
+
+void Card::setCardPoint(int cp) {
+	cardPoint = cp;
+}
+
+int Card::getCardPoint() {
+	return cardPoint();
+}
