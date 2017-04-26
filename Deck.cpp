@@ -84,6 +84,12 @@ Card Deck::removeTopCard() {
 	return card;
 }
 
+Card Deck::removeCardAt(int num) {
+	Card card = deck[num];
+	vec.erase(vec.begin() + num);
+	return card;
+}
+
 void Deck::populateDeck()
 {
 	Card d; //used to load cards into the vector
