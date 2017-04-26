@@ -114,14 +114,23 @@ void mainLoop() {
 			cin >> choice;
 			cout << endl;
 			
-			if (choice == 'c') {		//example
-				//do something
+			if (choice == 'd') {		//discard card
+				int cardNum = 0;
+				cout << "Enter card number to discard";
+				cin >> cardNum;
+				
+				discardPile.addCard(playerPile.removeCardAt(cardNum));
 			}
+			
+			//run checks
 		}
 		
 		//ai turn
 		if (turn == 2) {
 			
+			
+			
+			//run checks
 		}
 		
 		//swtich turns
