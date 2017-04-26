@@ -8,6 +8,7 @@ class Card {
 private:
   string suit;
   string value;
+  int cardPoint;
 public:
   Card(string, string);
   void showCard();
