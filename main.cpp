@@ -123,6 +123,8 @@ void mainLoop() {
 			}
 			
 			//run checks
+				//calculate deadwood
+				//find melds
 		}
 		
 		//ai turn
