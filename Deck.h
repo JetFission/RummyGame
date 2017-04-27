@@ -17,6 +17,7 @@ public:
 	void deleteDeck(); // called only once
 	void printHand(); //used to verify stuff
 	void printDeck();
+	Card removeCardAt(int num);
 };
 
 #endif
