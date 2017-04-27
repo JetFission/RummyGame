@@ -7,6 +7,9 @@ class Deck{
 private:
 	vector<Card> deck;
 	Card c;//used as an intermediary
+	
+	//---------------April 27---------------//
+	vector<Card> melds
 public:
 	Deck();
 	void shuffle();
