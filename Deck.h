@@ -8,6 +8,7 @@ private:
 	vector<Card> deck;
 	Card c;//used as an intermediary
 public:
+	Deck();
 	void shuffle();
 	void addCard(Card card);
 	Card removeTopCard();
