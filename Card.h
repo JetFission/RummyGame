@@ -13,7 +13,7 @@ private:
 	int pointVal; //used to help determine melds 
 public:
 	Card(char, char);
-
+	Card();
 	char getValue(); //used for initializing and dealing out cards
 	char getSuit();
 
