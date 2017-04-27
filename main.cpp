@@ -84,7 +84,7 @@ void mainLoop() {
 		
 		//player turn
 		if (turn == 1) {
-			//show game UI
+			//show game UI, drawing
 			int csize = 10;	
 			int psize = 10;	
 			char choice;
@@ -114,17 +114,27 @@ void mainLoop() {
 			cin >> choice;
 			cout << endl;
 			
-			if (choice == 'd') {		//discard card
+			if (choice == 'd') { 		//drawing from discard pile
+				
+			} else if (choice == 's') {	//drawing from stock pile
+				
+			}
+			
+			//display ui, discarding
+			//scan melds
+			
+			if (choice == 'd') {		//discard
 				int cardNum = 0;
 				cout << "Enter card number to discard";
 				cin >> cardNum;
 				
 				discardPile.addCard(playerPile.removeCardAt(cardNum));
+			} else if (choice == 'k') 	//knock, if possible
+						
 			}
 			
 			//run checks
-				//calculate deadwood
-				//find melds
+		
 		}
 		
 		//ai turn
