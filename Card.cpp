@@ -22,6 +22,11 @@ Card::Card(char s, char v) {
 	}
 }
 
+Card::Card() { 
+	suit = '0';
+	value = '0';
+}
+
 void Card::showCard() {
 	cout << value << "\t" << suit;
 }
