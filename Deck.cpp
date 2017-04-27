@@ -15,6 +15,10 @@ using namespace std;
 
 int myrandom(int i) { return rand() % i; }
 
+Deck::Deck() {
+	
+}
+
 void Deck::dealHands(Deck& other1, Deck& other2)
 {
 	for (unsigned int i = 0; i < 10; i++)
