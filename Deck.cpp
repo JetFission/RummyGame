@@ -81,6 +81,12 @@ void Deck::addCard(Card card) {
 	deck.push_back(card);
 }
 
+Card Deck::removeCardAt(int num) {
+ 	Card card = deck[num];
+ 	vec.erase(vec.begin() + num);
+ 	return card;
+ }
+
 Card Deck::removeTopCard() {
 	Card card = deck.back();
 	deck.erase(deck.begin(), deck.begin() + 1); //removes card from deck. For instance, an object mainDeck of type Deck in main function
