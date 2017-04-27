@@ -110,3 +110,7 @@ void Deck::populateDeck()
 		}
 	}
 }
+
+void Deck:Deck scanMelds() {
+		
+}
