@@ -21,6 +21,7 @@ public:
 	void printHand(); //used to verify stuff
 	void printDeck();
 	Card removeCardAt(int num);
+	void scanMelds();
 };
 
 #endif
