@@ -1,17 +1,25 @@
 #ifndef Card_H
 #define Card_H
+
 #include <iostream>
+#include <string> 
 
 using namespace std;
 
 class Card {
 private:
-  string suit;
-  string value;
-  int cardPoint;
+	char suit;
+	char value;
+	int pointVal; //used to help determine melds 
 public:
-  Card(string, string);
-  void showCard();
+	Card(char, char);
+
+	char getValue(); //used for initializing and dealing out cards
+	char getSuit();
+
+	void addCard(char, char);
+
+	void showCard();
 };
 
 #endif
