@@ -9,7 +9,7 @@ using namespace std;
 
 char p1;
 string p2;
-int p3;
+int p3, p4;
 
 int myrandom(int i) { return rand() % i; }
 
@@ -18,6 +18,7 @@ struct Card
 	string suit;
 	char value;
 	int deadwoodVal;
+	int orderVal;
 };
 
 
@@ -41,19 +42,23 @@ char card[13] = {'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K'
 			d.value = card[j];
 			
 			
-			//Assigns Deadwood Values to each Card
+			//Assigns Deadwood Values and Order Weight to each Card
 			if(card[j] == 'A'){
-			d.deadwoodVal = 1;	
+			d.deadwoodVal = 1;
+			d.orderVal = 1;	
 			}
-			else if ((card[j] == 'T')||(card[j] == 'J')||(card[j] == 'Q')||(card[j] == 'K')){
+			else if (card[j] == 'T'){
 			d.deadwoodVal = 10;
 			}
 			else if((card[j] <= '9')&&(card[j] >= '2')){
 			d.deadwoodVal = card[j] - '0';
+			d.orderVal = card[j] - '0';
 			};
 			
 			
-
+			
+		
+			
 			deck.push_back(d);
 		}
 	}
@@ -132,106 +137,46 @@ cout << "\nSORTING\n************************************************************
 
 //Sort by Suit
 for(int x = 0; x < 52; ++x){
-
 for(int handSlot = 0; handSlot < (player.size() - 1); ++handSlot){
 if(player[handSlot].suit < player[handSlot + 1].suit){
 
 p1 = player[handSlot].value;
 p2 = player[handSlot].suit;
 p3 = player[handSlot].deadwoodVal;
+p4 = player[handSlot].orderVal;
 
 player[handSlot].suit = player[handSlot + 1].suit;
 player[handSlot].value = player[handSlot + 1].value;
 player[handSlot].deadwoodVal =player[handSlot + 1].deadwoodVal;
+player[handSlot].orderVal = player[handSlot + 1].orderVal;
 
-player[handSlot + 1].value = p1;
+player[handSlot +1].value = p1;
 player[handSlot +1].suit = p2;
 player[handSlot +1].deadwoodVal =p3;
-}
-}
-}//************************************
+player[handSlot +1].orderVal = p4;
+}}};
 
 
 //Sort Suits by Number
 for(int x = 0; x < 52; ++x){
 
 for(int handSlot = 0; handSlot < (player.size() - 1); ++handSlot){//====
-if((player[handSlot].deadwoodVal > player[handSlot + 1].deadwoodVal)&&(player[handSlot].suit == player[handSlot + 1].suit)){
-
+if((player[handSlot].orderVal > player[handSlot + 1].orderVal)&&(player[handSlot].suit == player[handSlot + 1].suit)){
 p1 = player[handSlot].value;
 p2 = player[handSlot].suit;
 p3 = player[handSlot].deadwoodVal;
+p4 = player[handSlot].orderVal;
 
 player[handSlot].suit = player[handSlot + 1].suit;
 player[handSlot].value = player[handSlot + 1].value;
 player[handSlot].deadwoodVal =player[handSlot + 1].deadwoodVal;
+player[handSlot].orderVal = player[handSlot + 1].orderVal;
 
 player[handSlot + 1].value = p1;
 player[handSlot +1].suit = p2;
 player[handSlot +1].deadwoodVal =p3;
-}
-}//====
-}//************************************
-
-
-//Sorts Face Values
-for(int x = 0; x < 24; ++x){
-for(int handSlot = 0; handSlot < (player.size() - 1); ++handSlot){
-//+++++++++++
-if((player[handSlot + 1].value == 'T') &&((player[handSlot].value == 'J')||(player[handSlot].value == 'Q')||(player[handSlot].value == 'K'))){
-
-p1 = player[handSlot].value;
-p2 = player[handSlot].suit;
-p3 = player[handSlot].deadwoodVal;
-
-player[handSlot].suit = player[handSlot + 1].suit;
-player[handSlot].value = player[handSlot + 1].value;
-player[handSlot].deadwoodVal =player[handSlot + 1].deadwoodVal;
-
-player[handSlot + 1].value = p1;
-player[handSlot +1].suit = p2;
-player[handSlot +1].deadwoodVal =p3;
-}//-------
-
-
-else if((player[handSlot + 1].value == 'J') &&((player[handSlot].value == 'Q')||(player[handSlot].value == 'K'))){
-
-p1 = player[handSlot].value;
-p2 = player[handSlot].suit;
-p3 = player[handSlot].deadwoodVal;
-
-player[handSlot].suit = player[handSlot + 1].suit;
-player[handSlot].value = player[handSlot + 1].value;
-player[handSlot].deadwoodVal =player[handSlot + 1].deadwoodVal;
-
-player[handSlot + 1].value = p1;
-player[handSlot +1].suit = p2;
-player[handSlot +1].deadwoodVal =p3;
-}//-------
-
-else if((player[handSlot + 1].value == 'Q') &&(player[handSlot].value == 'K')){
-
-p1 = player[handSlot].value;
-p2 = player[handSlot].suit;
-p3 = player[handSlot].deadwoodVal;
-
-player[handSlot].suit = player[handSlot + 1].suit;
-player[handSlot].value = player[handSlot + 1].value;
-player[handSlot].deadwoodVal =player[handSlot + 1].deadwoodVal;
-
-player[handSlot + 1].value = p1;
-player[handSlot +1].suit = p2;
-player[handSlot +1].deadwoodVal =p3;
-}//-------
-}}//+++++++++++++++
-
-
-
-
-
-
-
-
+player[handSlot].orderVal = p4;
+}}};
 
 
 //Print to Check Sort
