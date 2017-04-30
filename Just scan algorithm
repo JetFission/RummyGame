@@ -1,0 +1,48 @@
+void Deck::scanSet()
+{
+	int j = 0;
+	int countSet = 0;//keeps track of how many sets are accumulated 
+
+	for (unsigned int i = 0; i < deck.size(); i++) //takes just one card
+	{
+		for (j = i + 1; j < deck.size(); j++) //compares each cards point value with the rest
+		{
+			if (deck[i].getValue() == deck[j].getValue())
+			{
+				countSet++;
+
+				c.addCard(deck[j].getSuit(), deck[j].getValue(), deck[j].getPoint());
+
+
+				temp.push_back(c);
+			}
+		}
+
+		if (countSet == 3 || countSet == 4)
+		{
+			cout << endl; //testing 
+			cout << "Load card " << endl;
+			cout << endl;
+
+			c.addCard(deck[i].getSuit(), deck[i].getValue(), deck[i].getPoint());
+
+			set.push_back(c);
+			deck.erase(deck.begin + deck[i]);
+
+			for (unsigned int k = 0; k < temp.size(); k++)
+			{
+				set.push_back(temp[k]);
+				deck.erase(deck.begin());
+			}
+			temp.erase(temp.begin(), temp.end());
+		}
+
+		else //meant to delete cards added if a set was not formed
+		{
+			
+				temp.erase(temp.begin(), temp.end());
+			
+		}
+		countSet = 0;
+	}
+}
