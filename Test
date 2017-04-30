@@ -4,7 +4,7 @@
 
 using namespace std;
 
-//----------------4/26/2017-------------//
+//----------------4/30/2017-------------//
 
 int main()
 {
@@ -12,6 +12,7 @@ int main()
 	Deck computer;
 	Deck mainDeck;
 	Deck gateKeeper;
+	
 
 	mainDeck.populateDeck();
 	mainDeck.shuffle();
@@ -20,11 +21,34 @@ int main()
 
 	gateKeeper.dealHands(player, mainDeck);
 
+	player.scanSet();
+
 	gateKeeper.dealHands(computer, mainDeck);
 
-	player.printDeck();
+	char choice = ' ';
 
-	computer.printHand();
+	cout << "choice? " << endl;
+	cin >> choice;
+
+	while (choice != 'q')
+	{
+		player.addCard(mainDeck);
+
+		mainDeck.deleteCard();
+
+		player.scanSet();
+
+		cout << "choice? " << endl;
+		cin >> choice;
+
+		player.printSet();
+	}
+
+	player.printHand();
+
+	player.printSet();
+
+	//computer.printHand();
 
 	mainDeck.printDeck();
 
