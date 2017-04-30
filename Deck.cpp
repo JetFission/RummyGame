@@ -128,7 +128,7 @@ void Deck::scanSet()
 			}
 		}
 
-		if (countSet == 2 || countSet == 3)
+		if (countSet == 3) //only be concerned about getting a set of 4 cards
 		{
 			cout << endl; //testing 
 			cout << "Load card " << endl;
