@@ -348,90 +348,52 @@ int main() {
 }
 
 void mainLoop() {
-
-	//initalize decks, may have to remove the () on these
-	Deck stockPile;
-	Deck discardPile;
-	Deck playerHand;
-	Deck AIHand;
-
-	//prepare stock pile
-	stockPile.populateDeck();
-	stockPile.shuffle();
-
-	//deal cards to players and ai
-	for (int i = 0; i < 10; i++) {
-		playerHand.addCard(stockPile.removeTopCard());
-		AIHand.addCard(stockPile.removeTopCard());
-	}
-
-	//initalize discard pile
-	discardPile.addCard(stockPile.removeTopCard());
-
-	//persistent variables here
-	bool finished = false;
-	bool canPlayerKnock = false;
-	bool canAIKnock = false;
+	//persistent game variables here
+	bool roundFinished = false;
+	bool gameFinished = false;
 	int playerScore = 0;
 	int AIScore = 0;
 	int turn = 1; //1 is the players turn, 2 is the AI's turn
+	string message = "";
+	int roundNum = 1;
 
-	while (!finished) {
+	while (!gameFinished) {
+		//initalize decks, may have to remove the () on these
+		Deck stockPile;
+		Deck discardPile;
+		Deck playerHand;
+		Deck AIHand;
 
-		if (system("CLS")) system("clear");
+		//prepare stock pile
+		stockPile.populateDeck();
+		stockPile.shuffle();
 
-		//player turn
-		if (turn == 1) {
-			//show game UI, drawing
-			int csize = 10;
-			int psize = 10;
-			char choice;
+		//deal cards to players and ai
+		for (int i = 0; i < 10; i++) {
+			playerHand.addCard(stockPile.removeTopCard());
+			AIHand.addCard(stockPile.removeTopCard());
+		}
 
-			if (system("CLS")) system("clear");
+		//initalize discard pile
+		discardPile.addCard(stockPile.removeTopCard());
 
-			cout << "****************************************************************" << endl;
-			cout << "* Player Score:" << playerScore << "\tDeadwood: " << playerHand.calculateDeadwood() << endl;
-			cout << "* Computer Score:" << AIScore << "\tDiscard Pile Top Card: ";
-			discardPile.showTopCard();
-			cout << endl;
-			cout << "****************************************************************" << endl;
+		while (!roundFinished) {
 
-			cout << "\t\t\t::Computers Hand (debug)::\n\t\t";
-			AIHand.printDeck();
+			//player turn
+			if (turn == 1) {
+				//show game UI, drawing
+				int csize = 10;
+				int psize = 10;
+				char choice;
 
-			cout << "\n\n";
-
-			cout << "\t\t\t::Players Hand::\n\t\t";
-			//-------------Scan player melds-----------
-			playerHand.scanSets();
-			//playerHand.sortDeck();
-			playerHand.printDeck();
-
-			cout << endl;
-			cout << "****************************************************************" << endl;
-			cout << "\t\t\t   ::Draw::" << endl;
-			cout <<"\t\td)from discard pile\ts)from stock pile" << endl;
-			cout <<"\t\tPlease Select Action: ";
-			cin >> choice;
-			cout << endl;
-
-			if (choice == 'd') { 		//drawing from discard pile
-				playerHand.addCard(discardPile.removeTopCard());
-			}
-			if (choice == 's') {	//drawing from stock pile
-				playerHand.addCard(stockPile.removeTopCard());
-			}
-
-			//-----------scan player melds-------------
-			playerHand.scanSets();
-
-			bool loop = false;
-			do {
 				if (system("CLS")) system("clear");
+				cout << message;
+				message = "";
 
+				cout << endl;
 				cout << "****************************************************************" << endl;
 				cout << "* Player Score:" << playerScore << "\tDeadwood: " << playerHand.calculateDeadwood() << endl;
-				cout << "* Computer Score:" << AIScore << "\tDiscard Pile Top Card: ";
+				cout << "* Computer Score:" << AIScore << "\tRound " << roundNum << "\t\tDiscard Pile Top Card: ";
 				discardPile.showTopCard();
 				cout << endl;
 				cout << "****************************************************************" << endl;
@@ -442,72 +404,142 @@ void mainLoop() {
 				cout << "\n\n";
 
 				cout << "\t\t\t::Players Hand::\n\t\t";
+				//-------------Scan player melds-----------
+				playerHand.scanSets();
 				//playerHand.sortDeck();
 				playerHand.printDeck();
 
 				cout << endl;
 				cout << "****************************************************************" << endl;
-				cout << "\t\t\t   ::Discard::" << endl;
-				cout <<"\t\td)discard\tk)knock" << endl;
+				cout << "\t\t\t   ::Draw::" << endl;
+				cout <<"\t\td)from discard pile\ts)from stock pile" << endl;
 				cout <<"\t\tPlease Select Action: ";
 				cin >> choice;
 				cout << endl;
 
-				if (choice == 'd') {		//discard
-					int cardNum = 0;
-					cout << "Enter card position to discard (starting from 0): ";
-					cin >> cardNum;
-					discardPile.addCard(playerHand.removeCardAt(cardNum));
-					loop = false;
+				if (choice == 'd') { 		//drawing from discard pile
+					playerHand.addCard(discardPile.removeTopCard());
 				}
-				if (choice == 'k') {	//knock, if possible
-					if (canPlayerKnock) {
-						cout << "Knock not implemented" << endl;
-					}
-					if (!canPlayerKnock) {
-						if (system("CLS")) system("clear");
-						cout << "Can't knock yet!" << endl;
-						loop = true;
-					}
+				if (choice == 's') {	//drawing from stock pile
+					playerHand.addCard(stockPile.removeTopCard());
 				}
-			} while (loop);
-		}
 
-		//ai turn
-		if (turn == 2) {
-			//-----------scan ai melds-------------
-			AIHand.scanSets();
+				//-----------scan player melds-------------
+				playerHand.scanSets();
 
-			if (!AIHand.hasSets()) {
-				AIHand.addCard(stockPile.removeTopCard());
+				bool loop = false;
+				do {
+					if (system("CLS")) system("clear");
+					cout << message << endl;
+					message = "";
 
-				int discardCard = random(0, 10);
-				discardPile.addCard(AIHand.removeCardAt(discardCard));
+					cout << "****************************************************************" << endl;
+					cout << "* Player Score:" << playerScore << "\tDeadwood: " << playerHand.calculateDeadwood() << endl;
+					cout << "* Computer Score:" << AIScore << "\tRound " << roundNum << "\t\tDiscard Pile Top Card: ";
+					discardPile.showTopCard();
+					cout << endl;
+					cout << "****************************************************************" << endl;
+
+					cout << "\t\t\t::Computers Hand (debug)::\n\t\t";
+					AIHand.printDeck();
+
+					cout << "\n\n";
+
+					cout << "\t\t\t::Players Hand::\n\t\t";
+					//playerHand.sortDeck();
+					playerHand.printDeck();
+
+					cout << endl;
+					cout << "****************************************************************" << endl;
+					cout << "\t\t\t   ::Discard::" << endl;
+					cout <<"\t\td)discard\tk)knock" << endl;
+					cout <<"\t\tPlease Select Action: ";
+					cin >> choice;
+					cout << endl;
+
+					if (choice == 'd') {		//discard
+						int cardNum = 0;
+						cout << "Enter card number to discard: ";
+						cin >> cardNum;
+						discardPile.addCard(playerHand.removeCardAt(cardNum));
+						loop = false;
+					}
+					if (choice == 'k') {	//knock, if possible
+						if (playerHand.calculateDeadwood() <= 10) {
+							roundNum++;
+							if (playerHand.calculateDeadwood() > AIHand.calculateDeadwood()) {
+								int score = 25 + (playerHand.calculateDeadwood() - AIHand.calculateDeadwood());
+								AIScore += score;
+								message = "Undercut! Computer gets ";
+								message += score;
+								message += " points.";
+							} else {
+								int score = AIHand.calculateDeadwood() - playerHand.calculateDeadwood();
+								playerScore +=score;
+								message = "Player knocks, earns ";
+								message += score;
+								message += " points!";
+							}
+							roundFinished = true;
+						}
+						if (playerHand.calculateDeadwood() > 10) {
+							if (system("CLS")) system("clear");
+							message = "Can't knock yet!";
+							loop = true;
+						}
+					}
+				} while (loop);
 			}
-			if (AIHand.hasSets()) {
-				char setType = AIHand.getSetType();
-				char discardValue = discardPile.getTopCardValue();
 
-				if (setType == discardValue)
-					AIHand.addCard(discardPile.removeTopCard());
-				else
+			//ai turn
+			if (turn == 2) {
+				//-----------scan ai melds-------------
+				AIHand.scanSets();
+
+				if (!AIHand.hasSets()) {
 					AIHand.addCard(stockPile.removeTopCard());
 
-				if (AIHand.calculateDeadwood() <= 10) {
-					cout << "Computer Knocks!";
-					//do something
+					int discardCard = random(0, 10);
+					discardPile.addCard(AIHand.removeCardAt(discardCard));
 				}
+				if (AIHand.hasSets()) {
+					char setType = AIHand.getSetType();
+					char discardValue = discardPile.getTopCardValue();
 
-				int discardCard = random(AIHand.getSetSize(), 10);
-				discardPile.addCard(AIHand.removeCardAt(discardCard));
+					if (setType == discardValue)
+						AIHand.addCard(discardPile.removeTopCard());
+					else
+						AIHand.addCard(stockPile.removeTopCard());
+
+					if (AIHand.calculateDeadwood() <= 10) {
+						roundNum++;
+						if (AIHand.calculateDeadwood() > playerHand.calculateDeadwood()) {
+							int score = 25 + (AIHand.calculateDeadwood() - playerHand.calculateDeadwood());
+							playerScore += score;
+							message = "Undercut! Player gets ";
+							message += score;
+							message += " points.";
+						} else {
+							int score = playerHand.calculateDeadwood() - AIHand.calculateDeadwood();
+							AIScore +=score;
+							message = "Computer knocks, earns ";
+							message += score;
+							message += " points!";
+						}
+						roundFinished = true;
+					}
+
+					int discardCard = random(AIHand.getSetSize(), 10);
+					discardPile.addCard(AIHand.removeCardAt(discardCard));
+				}
 			}
-		}
 
-		//swtich turns
-		if (turn == 2) {
-			turn = 1;
-		} else {
-			turn = 2;
+			//swtich turns
+			if (turn == 2) {
+				turn = 1;
+			} else {
+				turn = 2;
+			}
 		}
 	}
 }
