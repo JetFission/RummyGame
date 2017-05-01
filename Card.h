@@ -11,13 +11,14 @@ private:
 	char suit;
 	char value;
 	int pointVal; //used to help determine melds 
+	int actualPoint;
 public:
-	Card(char, char);
-	Card();
 	char getValue(); //used for initializing and dealing out cards
 	char getSuit();
+	int getPoint();
+	int getActualPoint();
 
-	void addCard(char, char);
+	void addCard(char, char, int, int);
 
 	void showCard();
 };
