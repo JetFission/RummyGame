@@ -65,7 +65,7 @@ void Deck::printRun() //testing purposes
 {
 	cout << "-------Run---------" << endl;
 
-	for (unsigned int i = 0; i < set.size(); i++)
+	for (unsigned int i = 0; i < run.size(); i++)
 	{
 
 		cout << run[i].getSuit() << "\t" << run[i].getValue() << endl;
@@ -205,6 +205,7 @@ void Deck::scanRun()
 
 	int j = 0;
 	int countRun = 0;//keeps track of how many sets are accumulated 
+	int count = 0;
 
 	for (unsigned int i = 0; i < deck.size(); i++) //takes just one card
 	{
@@ -212,9 +213,13 @@ void Deck::scanRun()
 		{
 			if (deck[i].getSuit() == deck[j].getSuit())
 			{
-				countRun++;
+				count++;
+				if (deck[i].getPoint() + count == deck[j].getPoint())
+				{
+					countRun++;
 
-				temp.push_back(deck[j]);
+					temp.push_back(deck[j]);
+				}
 			}
 		}
 
@@ -248,6 +253,7 @@ void Deck::scanRun()
 			temp.clear();
 		}
 		countRun = 0;
+		count = 0;
 	}
 }
 
@@ -279,4 +285,5 @@ bool Deck::checkAI(Deck& card)
 	}
 	return found;
 }
+
 
