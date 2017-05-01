@@ -18,13 +18,16 @@ int main()
 	int deadPoints2 = 0;
 	int spot = 0; //used to hold the position of the card to be discarded
 
+	int turn = 0; 
+
 	char choice = ' '; //holds choice that the user makes
 
 	bool knock = false;
+	bool AI = false; //used to help A.I. make a decision 
 
-	cout << "-----------------GIN RUMMY------------" << endl;
-	cout << endl;
-	cout << endl;
+	std::cout << "-----------------GIN RUMMY------------" << endl;
+	std::cout << endl;
+	std::cout << endl;
 	
 
 	mainDeck.populateDeck();
@@ -40,84 +43,145 @@ int main()
 	mainDeck.deleteDeck();
 
 	player.scanSet();
+	player.scanRun();
 	computer.scanSet();
+	computer.scanRun();
+
+	deadPoints1 = player.calculateDeadwood();
+	deadPoints2 = computer.calculateDeadwood();
+
+	std::cout << "********************TESTING******************" << endl;
+	std::cout << "The run that belongs to player is " << endl;
+	player.printRun();
+	cout << "**************************************************" << endl;
+	cout << endl;
 
 	while (mainDeck.getSizeOfStock() > 0 && knock == false)
 	{
 
-		cout << "****************************************************************" << endl;
-		cout << endl;
-		cout << "* Player Score:" << deadPoints1  << endl;
-		cout << "* Computer Score:" << deadPoints2 << endl;
-		cout << "Top card of the discard pile shown below " << endl;
+		std::cout << "****************************************************************" << endl;
+		std::cout << endl;
+		std::cout << "* Player Score:" << deadPoints1 << endl;
+		std::cout << "* Computer Score:" << deadPoints2 << endl;
+		std::cout << "Top card of the discard pile shown below " << endl;
 		pile.printCard();
-		cout << endl;
-		cout << endl;
+		std::cout << endl;
+		std::cout << endl;
 
-		cout << "Player's hand: " << endl;
-		cout << endl;
+		std::cout << "Player's hand: " << endl;
+		std::cout << endl;
 
-		cout << "------------------------------------------------------------------" << endl;
+		std::cout << "------------------------------------------------------------------" << endl;
 		player.printHand();
-		cout << "------------------------------------------------------------------" << endl;
-		cout << endl;
+		std::cout << "------------------------------------------------------------------" << endl;
+		std::cout << endl;
 
 
-		cout << "Player's melds are " << endl;
-		cout << "------------------------------------------------------------------" << endl;
+		std::cout << "Player's melds are " << endl;
+		std::cout << "------------------------------------------------------------------" << endl;
 		player.printSet();
-		cout << "------------------------------------------------------------------" << endl;
-		cout << endl;
+		std::cout << "------------------------------------------------------------------" << endl;
+		std::cout << endl;
 
-		cout << "****************************************************************" << endl;
-
-
-		cout << "Type d to draw from the discard pile " << endl;;
-		cout << "s to draw from the stock, or k to knock (must have 10 points or less of deadwood)." << endl;
-
-		cin >> choice;
-
-		if (choice == 'd')
-		{
-			player.addCard(pile);
-			pile.deleteCard();
-		}
-
-		else if (choice == 's')
-		{
-			player.addCard(mainDeck);
-			mainDeck.deleteCard();
-		}
-
-		else if (choice == 'k' && deadPoints1 <= 10)
-		{
-			knock == true;
-		}
-
-		cout << endl;
-		cout << "^^^^^^^^^^^^^^^^^^^^^^^^^" << endl;
-		cout << "Please pick a card to go to the discard pile (must be one different from one drawn)." << endl;
-		cout << "The way this works is you enter a number 0-n. With n being the last position of your card." << endl;
-		cout << "^^^^^^^^^^^^^^^^^^^^^^^^^" << endl;
-		cout << endl;
-
-		cin >> spot;
+		std::cout << "****************************************************************" << endl;
 
 
-		pile.addCardFromSpot(player, spot);
-		player.deleteCardFromSpot(spot);
 		
-		player.scanSet();
-		computer.scanSet();
+
+		if (turn == 0)
+		{
+			std::cout << "Type d to draw from the discard pile " << endl;
+			std::cout << "s to draw from the stock, or k to knock (must have 10 points or less of deadwood)." << endl;
+
+			cin >> choice;
+
+			if (choice == 'd')
+			{
+				player.addCard(pile);
+				pile.deleteCard();
+			}
+
+			else if (choice == 's')
+			{
+				player.addCard(mainDeck);
+				mainDeck.deleteCard();
+			}
+
+			else if (choice == 'k' && deadPoints1 <= 10)
+			{
+				knock == true;
+			}
+
+			std::cout << endl;
+			std::cout << "^^^^^^^^^^^^^^^^^^^^^^^^^" << endl;
+			std::cout << "Please pick a card to go to the discard pile (must be one different from one drawn)." << endl;
+			std::cout << "The way this works is you enter a number 0-n. With n being the last position of your card." << endl;
+			std::cout << "^^^^^^^^^^^^^^^^^^^^^^^^^" << endl;
+			std::cout << endl;
+
+			cin >> spot;
+
+			pile.addCardFromSpot(player, spot);
+			player.deleteCardFromSpot(spot);
+
+			player.scanSet();
+			player.scanRun();
+
+			std::cout << "********************TESTING******************" << endl;
+			std::cout << "The run that belongs to player is " << endl;
+			player.printRun();
+			cout << "**************************************************" << endl;
 
 
-		deadPoints1 = player.calculateDeadwood();
+			deadPoints1 = player.calculateDeadwood();
+			turn = 1; //A.I. turn
+		}
 
-		deadPoints2 = computer.calculateDeadwood();
+		else if (turn == 1)
+		{
+
+			if (deadPoints2 <= 10)
+			{
+				knock == true;
+			}
+
+			else if (deadPoints2 > 10)
+			{
+				AI = pile.checkAI(computer);
+
+				if (AI == true) //AI draws from the discard pile
+				{
+					if (choice == 'd')
+					{
+						computer.addCard(pile);
+						pile.deleteCard();
+					}
+				}
+
+				else if (AI == false) //AI draws from the stock
+				{
+					computer.addCard(mainDeck);
+					mainDeck.deleteCard();
+				}
+
+
+				computer.scanSet();
+
+				deadPoints2 = computer.calculateDeadwood();
+
+				std::cout << endl;
+				std::cout << "Computer's hand" << endl;
+				std::cout << "=======================" << endl;
+				computer.printHand(); //debug
+				std::cout << "=======================" << endl;
+			}
+			turn = 0; //back to the player's turn
+		}
+		
 	}
-	cout << endl;
-	cout << "Good game!" << endl;
+	std::cout << endl;
+	std::cout << "Good game!" << endl;
 
-	system("pause");
+	std::system("pause");
 	return 0;
 }
