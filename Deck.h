@@ -1,12 +1,22 @@
+#ifndef Deck_H
+#define Deck_H
+#include <vector>
+#include "Card.h"
+
+class Deck{
 private:
 	vector<Card> deck;
 	Card c;//used as an intermediary
 	vector<Card> set; //stores sets belonging to both person and computer
+	vector<Card> run;
 	vector<Card> temp; //used to temporarily hold Card objects
 	int deadPoints; //used to keep track of the deadwood points for both player and computer
 
 public:
 	void printSet(); //testing 
+	void printRun(); //testing 
+	void scanRun(); //checks for a run
+	bool checkAI(Deck&); //used to check if the A.I. is holding a card that matches the top card of the discard pile
 	void printCard(); //used to print a single card
 	int getSizeOfStock(); //returns the size of the stock 
 	void shuffle();
