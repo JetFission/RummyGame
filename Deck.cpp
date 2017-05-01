@@ -11,6 +11,10 @@
 
 using namespace std;
 
+struct myclass {
+	bool operator() (Card i, Card j) { return (i.getPoint() < j.getPoint()); }
+} myobject;
+
 //---------------4/30/2017--------------//
 
 int myrandom(int i) { return rand() % i; }
@@ -53,6 +57,18 @@ void Deck::printSet() //testing purposes
 	{
 
 		cout << set[i].getSuit() << "\t" << set[i].getValue() << endl;
+		cout << endl;
+	}
+}
+
+void Deck::printRun() //testing purposes
+{
+	cout << "-------Run---------" << endl;
+
+	for (unsigned int i = 0; i < set.size(); i++)
+	{
+
+		cout << run[i].getSuit() << "\t" << run[i].getValue() << endl;
 		cout << endl;
 	}
 }
@@ -183,17 +199,84 @@ void Deck::scanSet()
 	}
 }
 
-void Deck::deleteCard() //get rid of only one card
+void Deck::scanRun()
 {
-	deck.erase(deck.begin());
+	std::sort(deck.begin(), deck.end(), myobject); //sorts the deck with the smallest point value going to the front
+
+	int j = 0;
+	int countRun = 0;//keeps track of how many sets are accumulated 
+
+	for (unsigned int i = 0; i < deck.size(); i++) //takes just one card
+	{
+		for (j = i + 1; j < deck.size(); j++) //compares each cards point value with the rest
+		{
+			if (deck[i].getSuit() == deck[j].getSuit())
+			{
+				countRun++;
+
+				temp.push_back(deck[j]);
+			}
+		}
+
+		if (countRun >= 2)
+		{
+			run.push_back(deck[i]);
+
+			deck.erase(deck.begin() + i);
+
+
+			for (unsigned int k = 0; k < temp.size(); k++)
+			{
+				run.push_back(temp[k]);
+			}
+			temp.clear();
+
+
+			for (unsigned int i = 0; i < set.size(); i++)
+			{
+				for (unsigned int j = i + 1; j < deck.size(); j++)
+				{
+					if ((run[i].getValue() == deck[j].getValue()) && (run[i].getSuit() == deck[j].getSuit()))
+						deck.erase(deck.begin() + j);
+				}
+			}
+		}
+
+		else //meant to delete cards added if a set was not formed
+		{
+
+			temp.clear();
+		}
+		countRun = 0;
+	}
+}
+
+void Deck::deleteCard() //get rid of only one card 
+{
+	deck.erase(deck.begin()); 
 }
 
 int Deck::calculateDeadwood() 
 {
 	deadPoints = 0;
-	for (int i = 0; i < deck.size(); i++) {
+	for (int i = 0; i < deck.size(); i++) 
+	{
 		deadPoints += deck[i].getPoint();
 	}
 
 	return deadPoints;
 }
+
+bool Deck::checkAI(Deck& card)
+{
+	bool found = false;
+	for (unsigned int i = 0; i < card.deck.size(); i++)
+	{
+		if (deck[0].getValue() == card.deck[i].getValue())
+		{
+			found == true;
+		}
+	}
+	return found;
+}
+
