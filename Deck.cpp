@@ -23,7 +23,7 @@ void Deck::dealHands(Deck& other1, Deck& other2)
 {
 	for (unsigned int i = 0; i < 10; i++)
 	{
-		other1.c.addCard(other2.deck[i].getSuit(), other2.deck[i].getValue(), other2.deck[i].getPoint());
+		other1.c.addCard(other2.deck[i].getSuit(), other2.deck[i].getValue(), other2.deck[i].getPoint(), other2.deck[i].getActualPoint());
 
 		other1.deck.push_back(other1.c);
 
@@ -127,12 +127,13 @@ void Deck::populateDeck()
 	char suit[4] = { 'H', 'D', 'C', 'S' };
 	char value[13] = { '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A' };
 	int point[13] = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1 };
+	int actualPoint[13] = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1 };
 
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 13; j++)
 		{
-			c.addCard(suit[i], value[j], point[j]);
+			c.addCard(suit[i], value[j], point[j], actualPoint[j]);
 
 
 			deck.push_back(c);
@@ -267,7 +268,7 @@ int Deck::calculateDeadwood()
 	deadPoints = 0;
 	for (int i = 0; i < deck.size(); i++) 
 	{
-		deadPoints += deck[i].getPoint();
+		deadPoints += deck[i].getActualPoint();
 	}
 
 	return deadPoints;
