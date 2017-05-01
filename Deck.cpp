@@ -33,9 +33,14 @@ void Deck::printHand()
 
 	for (unsigned int i = 0; i < deck.size(); i++)
 	{
-		cout << deck[i].getSuit() << "\t" << deck[i].getValue() <<  endl;
+		cout << "Position: " << i << ")   " << deck[i].getSuit() << "\t" << deck[i].getValue() <<  endl;
 		cout << endl;
 	}
+}
+
+int Deck::getSizeOfStock()
+{
+	return deck.size();
 }
 
 void Deck::printSet() //testing purposes
@@ -55,17 +60,12 @@ void Deck::printSet() //testing purposes
 void Deck::printDeck()
 {
 	cout << "-------Deck---------" << endl;
-	int count = 0;
 
 	for (unsigned int i = 0; i < deck.size(); i++)
 	{
-		cout << deck[i].getSuit() << "\t" << deck[i].getValue() << "\t" << deck[i].getPoint() << endl;
+		cout << deck[i].getSuit() << "\t" << deck[i].getValue() <<  endl;
 		cout << endl;
-		count++;
 	}
-
-	cout << "The count for deck is " << count << endl;
-	cout << endl; //test
 }
 
 void Deck::deleteDeck() //deletes one card from deck, depending on which object calls it
@@ -90,12 +90,27 @@ void Deck::addCard(Deck& card)
 	deck.push_back(card.deck[0]);
 }
 
+void Deck::printCard()
+{
+	cout << deck[0].getSuit() << "\t" << deck[0].getValue() << endl;
+}
+
+void Deck::addCardFromSpot(Deck& card, int place)
+{
+	deck.push_back(card.deck[place]);
+}
+
+void Deck::deleteCardFromSpot(int place)
+{
+	deck.erase(deck.begin() + place);
+}
+
 void Deck::populateDeck()
 {
 
 	char suit[4] = { 'H', 'D', 'C', 'S' };
 	char value[13] = { '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A' };
-	int point[13] = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 1 };
+	int point[13] = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1 };
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -111,6 +126,7 @@ void Deck::populateDeck()
 
 void Deck::scanSet()
 {
+	
 	int j = 0;
 	int countSet = 0;//keeps track of how many sets are accumulated 
 
@@ -128,7 +144,7 @@ void Deck::scanSet()
 			}
 		}
 
-		if (countSet == 3) //only be concerned about getting a set of 4 cards
+		if (countSet == 3)
 		{
 			cout << endl; //testing 
 			cout << "Load card " << endl;
@@ -170,4 +186,14 @@ void Deck::scanSet()
 void Deck::deleteCard() //get rid of only one card
 {
 	deck.erase(deck.begin());
+}
+
+int Deck::calculateDeadwood() 
+{
+	deadPoints = 0;
+	for (int i = 0; i < deck.size(); i++) {
+		deadPoints += deck[i].getPoint();
+	}
+
+	return deadPoints;
 }
